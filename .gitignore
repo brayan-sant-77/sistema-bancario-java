@@ -1,0 +1,13 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Diretórios de compilação
+out/
+target/
+
+# Arquivos compilados
+*.class
+
+# Logs
+*.log

@@ -1,13 +1,11 @@
 # IntelliJ IDEA
 .idea/
+
+# Arquivos de módulo
 *.iml
 
-# Diretórios de compilação
+# Pasta de compilação
 out/
-target/
 
-# Arquivos compilados
-*.class
-
-# Logs
-*.log
+# Arquivos do sistema
+.DS_Store

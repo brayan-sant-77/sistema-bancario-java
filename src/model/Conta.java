@@ -1,6 +1,7 @@
 package model;
 
-import exception.SaldoInsuficienteException;
+import exception.ContaInexistenteException;import exception.SaldoInsuficienteException;
+import exception.TransacaoInvalidaException;import exception.ValorInvalidoException;
 
 public abstract class Conta {
 
@@ -16,20 +17,39 @@ public abstract class Conta {
         this.agencia = agencia;
     }
 
-    public void depositar(double valor) throws SaldoInsuficienteException {
+    public void depositar(double valor) {
+        if (valor <= 0) {
+            throw new ValorInvalidoException("O valor de depósito deve ser maio que 0!");
+        }
         saldo += valor;
-        System.out.println("Realizado com Sucesso!");
-        System.out.println("Valor em conta: " + saldo);
     }
 
-    public void sacar(double valor) throws SaldoInsuficienteException {
-        saldo -= valor;
-        System.out.println("Realizado com Sucesso!");
-        System.out.println("Valor em conta: " + saldo);
-    }
-    public void consultarSaldo() {
+    public void sacar(double valor) {
+       if (valor <= 0) {
+           throw new ValorInvalidoException("Valor deve ser maior do que zero!");
+       }
+       if (valor > saldo) {
+           throw new SaldoInsuficienteException("Saldo Insuficiente para saque!");
+       }
 
+       saldo -= valor;
     }
+
+    public void transferir(double valor, Conta contaDestino) {
+        if (valor <= 0) {
+            throw new ValorInvalidoException("O valor deve ser maior que zero!");
+        }
+        if (contaDestino == null) {
+            throw new ContaInexistenteException("A conta informada não existe!");
+        }
+        if (this.equals(contaDestino)) {
+            throw new TransacaoInvalidaException("Impossível realizar essa transação!");
+        }
+
+        this.sacar(valor);
+        contaDestino.depositar(valor);
+    }
+
 
     // Getters
     public Cliente getCliente() {
